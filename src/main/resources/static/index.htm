@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reactor Analyzer</title>
+    <link rel="stylesheet" type="text/css" href="css/visualizer.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/svg.min.js"></script>
+</head>
+<body>
+    <h1>Project Reactor Analyzer</h1>
+    <h3>Purpose</h3>
+    <p>This visualizer provides a little insight into what is happening under the covers when a reactive pipeline is running in Project Reactor.</p>
+    <p>Note that this visualizer executes any provided pipeline, and attempts to visually explain the execution path taken. In other words, it will
+       not show things that did NOT happen. For example, it will not show any error handling of the pipeline if no error actually occurs during execution.</p>
+    <h3>How to use the visualizer:</h3>
+    <ol>
+        <li>Add <a href="https://javanhe.com">Project Reactor Analyzer</a> to your project, and use an Analyzer instance on your Flux or Mono pipeline.</li>
+        <li>In the logs, look for the output of the analyzer and you should find some JSON.</li>
+        <li>Copy that JSON into the box below and click <span class="gray"><strong>Generate</strong></span>.</li>
+    </ol>
+    <p>&nbsp;</p>
+    <h3>Analyzer JSON output:</h3>
+    <textarea id="analyzer-json" style="height: 300px; width: 99%;"></textarea>
+    <button class="button" onClick="visualizer.generate()">Generate</button>
+    <p></p>
+</body>
+
+<script src="js/svg.generator.js"></script>
+</html>
