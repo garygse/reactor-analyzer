@@ -1,25 +1,38 @@
+@font-face {
+  font-family: "RobotoCondensed";
+  src: url("../font/RobotoCondensed-Regular.ttf");
+}
+
 body {
-    margin: 0;
-    color: #111111;
-    background-color: #E8EAF6;
+  margin: 0;
+  color: #111111;
+  background-color: #E8EAF6;
+  font-family: "RobotoCondensed";
 }
 
 #header {
-    display: block;
-    border-top: 4px solid #7B1FA2;
-    background: #212121;
-    margin: 0 auto;
+  display: block;
+  position: relative;
+  border-top: 4px solid #7B1FA2;
+  background: #212121;
+  height: 120px;
 }
 
-h1 {
-  color: #4527A0;
+div.logo img {
+  background-repeat: no-repeat;
+  background-size: 400px;
+  position: absolute;
+  height: 80px;
+  margin: 20px 35px;
+
+  -webkit-transition: opacity 0.4s ease-in-out;
+  -moz-transition: opacity 0.4s ease-in-out;
+  -o-transition: opacity 0.4s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
 }
 
-h1#logo {
-    background: url("../img/reactor-analyzer.png") no-repeat 0 0;
-    height: 100px;
-    background-size: 400px;
-    margin: 20px 25px;
+div.logo img.top:hover {
+  opacity: 0;
 }
 
 h3 {
@@ -27,32 +40,47 @@ h3 {
 }
 
 .main-content {
-    margin: 8px;
+  margin: 8px;
 }
 
 textarea {
-    height: 300px;
-    width: 99%;
-    resize: none;
+  height: 300px;
+  width: 100%;
+  resize: none;
+  border-radius: 4px;
+  padding: 0;
 }
+
 textarea:focus {
-    outline: none !important;
+  outline: none !important;
 }
 
 .button {
-  background-color: #7E57C2;
+  background-color: #4527A0;
   border: none;
+  border-radius: 8px;
   color: white;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: block;
+  font-family: "RobotoCondensed";
   font-size: 16px;
   margin: auto;
   cursor: pointer;
+  transition: 0.2s;
 }
+
+.button:hover {
+  opacity: 0.9;
+}
+
 .button:focus {
-    outline: none !important;
+  outline: none !important;
+}
+
+#visualization {
+  display: flex;
 }
 
 .explanation {
@@ -60,6 +88,12 @@ textarea:focus {
   margin-top: 5px;
   bottom: 35px;
   right: 20px;
+}
+
+.explanation hr {
+  background-color: #4527A0;
+  height: 1px;
+  border: none;
 }
 
 .explanation-header {

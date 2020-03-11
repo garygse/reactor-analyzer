@@ -7,7 +7,8 @@ var visualizer = {
     marbleType: 'circle',
 
     initialize: function() {
-        $('#explanation').empty();
+        $('#svg-image').empty();
+        $('.explanation').hide();
         this.events = this.getReactorEvents();
 
         if (this.draw) {
@@ -25,6 +26,10 @@ var visualizer = {
         var addConnectors = false;
         this.initialize();
 
+        if (this.events.length == 0) {
+            return;
+        }
+
         $.each(this.events, function( index, event ) {
             if (addConnectors) {
                 self.connectToOperator();
@@ -36,6 +41,9 @@ var visualizer = {
         });
 
         $('.explanation').show();
+        $('html, body').animate({
+            scrollTop: $('#visualization').offset().top
+        });
     },
 
     getReactorEvents: function() {
