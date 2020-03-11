@@ -82,10 +82,6 @@ var visualizer = {
         return text[1].startsWith('source(') ? text[0] : text [1];
     },
 
-    getEvent: function() {
-
-    },
-
     drawOperator: function(text) {
         var rect = this.draw.rect(175, 40).fill('white').move(this.x, this.y).stroke(this.stroke);
         var text = this.draw.text(text);
