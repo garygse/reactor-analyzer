@@ -1,17 +1,46 @@
+body {
+    margin: 0;
+    color: #111111;
+    background-color: #E8EAF6;
+}
+
+#header {
+    display: block;
+    border-top: 4px solid #7B1FA2;
+    background: #212121;
+    margin: 0 auto;
+}
 
 h1 {
-  color: #5e9ca0;
-}
-h3 {
-  color: #2e6c80;
+  color: #4527A0;
 }
 
-.gray {
-  color: #808080;
+h1#logo {
+    background: url("../img/reactor-analyzer.png") no-repeat 0 0;
+    height: 100px;
+    background-size: 400px;
+    margin: 20px 25px;
+}
+
+h3 {
+  color: #4527A0;
+}
+
+.main-content {
+    margin: 8px;
+}
+
+textarea {
+    height: 300px;
+    width: 99%;
+    resize: none;
+}
+textarea:focus {
+    outline: none !important;
 }
 
 .button {
-  background-color: gray;
+  background-color: #7E57C2;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -21,4 +50,27 @@ h3 {
   font-size: 16px;
   margin: auto;
   cursor: pointer;
+}
+.button:focus {
+    outline: none !important;
+}
+
+.explanation {
+  display: none;
+  margin-top: 5px;
+  bottom: 35px;
+  right: 20px;
+}
+
+.explanation-header {
+  padding: 10px 15px;
+  background: #512DA8;
+  font-size: 30px;
+  color: white;
+}
+
+.explanation-container {
+  padding: 15px;
+  background-color: #D1C4E9;
+  color: black
 }

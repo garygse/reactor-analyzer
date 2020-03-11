@@ -7,13 +7,13 @@ var visualizer = {
     marbleType: 'circle',
 
     initialize: function() {
-        // TODO: dynamically figure out size of image
+        $('#explanation').empty();
         this.events = this.getReactorEvents();
 
         if (this.draw) {
-            this.draw.clear().size(300, this.events.length * 120).addTo('body');
+            this.draw.clear().size(300, this.events.length * 120).addTo('#svg-image');
         } else {
-            this.draw = SVG().size(300, this.events.length * 120).addTo('body');
+            this.draw = SVG().size(300, this.events.length * 120).addTo('#svg-image');
         }
 
         this.x = 30;
@@ -34,12 +34,19 @@ var visualizer = {
             self.drawMarbles();
             addConnectors = true;
         });
+
+        $('.explanation').show();
     },
 
     getReactorEvents: function() {
         var self = this;
         var json = $('#analyzer-json').val();
-        var raw = JSON.parse(json);
+        var raw;
+        try {
+            raw = JSON.parse(json);
+        } catch(err) {
+            return [];
+        }
         var events = [];
 
         // the raw JSON contains tuples, so we need to make those easier to process
