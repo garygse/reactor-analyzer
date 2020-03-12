@@ -27,7 +27,7 @@ var visualizer = {
 
     initialize: function() {
         $('#svg-image').empty();
-        $('.explanation-container').empty();
+        $('.explanation').empty();
         this.events = this.getReactorEvents();
 
         if (this.draw) {
@@ -104,27 +104,60 @@ var visualizer = {
 
     generateExplanation: function() {
         var self = this;
-        var section = $('.explanation-container');
+        var section = $('.explanation');
 
         $.each(this.events, function( index, event ) {
-            if (index > 0) {
-                //section.append('<hr>');
-            }
             section.append(`<p class="explanation-header">${event.name}</p>`);
             section.append(`<p class="explanation-description">${self.descriptions[event.class]}</p>`);
 
-            var values = '';
+            var isObject = self.isObject(event.values[0]);
+            var values = isObject ? '<ul class="explanation-pipeline-data">' : '<p>';
+
             $.each(event.values, function( index, value ) {
-                if (index > 0) {
+                if (index > 0 && !isObject) {
                     values += ', ';
                 }
-                values += value;
+
+                if (isObject) {
+                    var json = JSON.stringify(value, null, '  ');
+                    values += `<li><div class="collapsible">${json}</div>
+                                   <div class="content">
+                                     <pre><code>${json}</code></pre>
+                                   </div>
+                               </li>`;
+                } else {
+                    values += value;
+                }
             });
 
-            section.append(`<div class="visualization"><p class="explanation-pipeline">Pipeline Data</p><p>${values}</p></div>`);
+            values += isObject ? '</ul>' : '</p>';
+            section.append(`<div class="visualization"><p class="explanation-pipeline">Pipeline Output</p>${values}</div>`);
         });
 
-        $('.explanation').show();
+        $('.explanation-container').show();
+        this.enableCollapsibleElements();
+    },
+
+    enableCollapsibleElements: function() {
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+            }
+          });
+        }
+    },
+
+    isObject: function(obj) {
+        var type = typeof obj;
+        return type === 'function' || type === 'object' && !!obj;
     },
 
     drawOperator: function(text) {
