@@ -5,10 +5,29 @@ var visualizer = {
     dashed: { color: 'black', width: 2, linecap: 'round', dasharray: '5,5' },
     marbleWidth: 30,
     marbleType: 'circle',
+    // TODO: complete these descriptions (currently simply pulling from Java Docs)
+    descriptions: {
+        FluxArray: 'Emits the contents of a wrapped (shared) array.',
+        FluxCallable: 'For each subscriber, a Supplier is invoked and the returned value emitted.',
+        FluxCombineLatest: 'Combines the latest values from multiple sources through a function.',
+        FluxDistinctFuseable: 'For each Subscriber, track elements from this Flux that have been seen and filter out duplicates.',
+        FluxFlatMap: 'Transform the elements emitted by this Flux asynchronously into Publishers, then flatten these inner publishers into a single Flux through merging, which allow them to interleave.',
+        FluxInterval: 'Emits long values starting with 0 and incrementing at specified time intervals on the global timer.',
+        FluxIterable: 'Emits the contents of an Iterable source.',
+        FluxMapFuseable: 'Maps the values of the source publisher one-on-one via a mapper function.',
+        FluxRange: 'Emits a range of integer values.',
+        FluxTakeFuseable: 'Takes only the first N values from the source Publisher. If N is zero, the subscriber gets completed if the source completes, signals an error or signals its first value (which is not relayed though).',
+        FluxZip: 'Repeatedly takes one item from all source Publishers and runs it through a function to produce the output item.',
+        MonoCollectList: 'Buffers all values from the source Publisher and emits it as a single List.',
+        MonoFirst: 'Given a set of Publishers, the Publisher that responds first with any signal is used.',
+        MonoFlattenIterable: 'Concatenates values from Iterable sequences generated via a mapper function.',
+        MonoJust: 'Emits a single item.',
+        MonoMapFuseable: 'Maps the values of the source publisher one-on-one via a mapper function.'
+    },
 
     initialize: function() {
         $('#svg-image').empty();
-        $('.explanation').hide();
+        $('.explanation-container').empty();
         this.events = this.getReactorEvents();
 
         if (this.draw) {
@@ -63,9 +82,11 @@ var visualizer = {
             $.each(keys, function( index, tupleKey ) {
                 var event = {
                     name: '',
+                    class: '',
                     values: []
                 }
                 event.name = self.convertTupleKey(tupleKey);
+                event.class = self.convertTupleKey(tupleKey, 0);
                 event.values = value.results[tupleKey];
                 events.push(event);
             });
@@ -74,14 +95,15 @@ var visualizer = {
         return events;
     },
 
-    convertTupleKey: function(tuple) {
+    convertTupleKey: function(tuple, pos) {
         // strip surrounding square braces
         var text = tuple.substring(1, tuple.length-2).replace(' ', '');
         text = text.split(',');
-        return text[1].startsWith('source(') ? text[0] : text [1];
+        return typeof pos !== 'undefined' ? text[pos] : text[1].startsWith('source(') ? text[0] : text [1];
     },
 
     generateExplanation: function() {
+        var self = this;
         var section = $('.explanation-container');
 
         $.each(this.events, function( index, event ) {
@@ -89,7 +111,7 @@ var visualizer = {
                 //section.append('<hr>');
             }
             section.append(`<p class="explanation-header">${event.name}</p>`);
-            section.append(`<p></p>`); // TODO: insert description of event
+            section.append(`<p class="explanation-description">${self.descriptions[event.class]}</p>`);
 
             var values = '';
             $.each(event.values, function( index, value ) {

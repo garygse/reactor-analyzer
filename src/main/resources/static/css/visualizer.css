@@ -111,6 +111,10 @@ p.explanation-header {
   font-size: 20px;
 }
 
+.explanation-description {
+  margin: 0px 10px 0px 10px;
+}
+
 .explanation-pipeline {
   padding: 5px 15px;
   background: #512DA8;
