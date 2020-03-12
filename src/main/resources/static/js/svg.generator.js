@@ -23,7 +23,6 @@ var visualizer = {
 
     generate: function() {
         var self = this;
-        var addConnectors = false;
         this.initialize();
 
         if (this.events.length == 0) {
@@ -31,18 +30,18 @@ var visualizer = {
         }
 
         $.each(this.events, function( index, event ) {
-            if (addConnectors) {
+            if (index > 0) {
                 self.connectToOperator();
             }
             self.drawOperator(event.name);
             self.drawTimeline();
             self.drawMarbles();
-            addConnectors = true;
         });
 
-        $('.explanation').show();
+        this.generateExplanation();
+
         $('html, body').animate({
-            scrollTop: $('#visualization').offset().top
+            scrollTop: $('.visualization').offset().top
         });
     },
 
@@ -80,6 +79,30 @@ var visualizer = {
         var text = tuple.substring(1, tuple.length-2).replace(' ', '');
         text = text.split(',');
         return text[1].startsWith('source(') ? text[0] : text [1];
+    },
+
+    generateExplanation: function() {
+        var section = $('.explanation-container');
+
+        $.each(this.events, function( index, event ) {
+            if (index > 0) {
+                //section.append('<hr>');
+            }
+            section.append(`<p class="explanation-header">${event.name}</p>`);
+            section.append(`<p></p>`); // TODO: insert description of event
+
+            var values = '';
+            $.each(event.values, function( index, value ) {
+                if (index > 0) {
+                    values += ', ';
+                }
+                values += value;
+            });
+
+            section.append(`<div class="visualization"><p class="explanation-pipeline">Pipeline Data</p><p>${values}</p></div>`);
+        });
+
+        $('.explanation').show();
     },
 
     drawOperator: function(text) {

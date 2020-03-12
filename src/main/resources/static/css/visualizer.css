@@ -82,7 +82,7 @@ textarea:focus {
   outline: none !important;
 }
 
-#visualization {
+.visualization {
   display: flex;
 }
 
@@ -91,6 +91,7 @@ textarea:focus {
   margin-top: 5px;
   bottom: 35px;
   right: 20px;
+  width: 100%;
 }
 
 .explanation hr {
@@ -100,10 +101,23 @@ textarea:focus {
 }
 
 .explanation-header {
-  padding: 10px 15px;
+  padding: 5px 15px;
   background: #512DA8;
   font-size: 30px;
   color: white;
+}
+
+p.explanation-header {
+  font-size: 20px;
+}
+
+.explanation-pipeline {
+  padding: 5px 15px;
+  background: #512DA8;
+  font-size: 15px;
+  color: white;
+  width: 85px;
+  margin-right: 15px;
 }
 
 .explanation-container {
