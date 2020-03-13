@@ -73,4 +73,19 @@ class Test {
 
         Flux.first(a, b)
     }
+
+    static Mono<String> never() {
+        Mono.never()
+    }
+
+    static Flux<String> neverFlux() {
+        Flux.never()
+    }
+
+    static Flux<Integer> merge() {
+        Flux<Integer> even = Flux.range(1, 10).filter { i -> i % 2 == 0 }
+        Flux<Integer> odd = Flux.range(1, 10).filter { i -> i % 2 > 0 }
+
+        Flux.merge(even, odd)
+    }
 }

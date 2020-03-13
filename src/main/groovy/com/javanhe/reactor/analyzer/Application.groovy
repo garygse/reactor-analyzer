@@ -1,5 +1,7 @@
 package com.javanhe.reactor.analyzer
 
+import java.time.Duration
+
 class Application {
 
     static void main(String[] args) {
@@ -13,6 +15,9 @@ class Application {
         analyzer.analyze Test.monoWithException()
         analyzer.analyze Test.delayedHelloWorld()
         analyzer.analyze Test.firstEmitter()
+        analyzer.analyze Test.never(), Duration.ofMillis(1)
+        analyzer.analyze Test.neverFlux(), Duration.ofMillis(1)
+        analyzer.analyze Test.merge()
         analyzer.stop()
     }
 }

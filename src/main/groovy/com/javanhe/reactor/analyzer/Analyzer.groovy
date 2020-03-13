@@ -12,6 +12,7 @@ import reactor.core.publisher.Hooks
 import reactor.core.publisher.Mono
 import reactor.core.publisher.Operators
 
+import java.time.Duration
 import java.util.concurrent.ConcurrentLinkedQueue
 
 @Slf4j
@@ -58,9 +59,21 @@ class Analyzer {
         }
     }
 
+    void analyze(Flux flux, Duration timeout) {
+        analyze {
+            flux.timeout(timeout).blockLast()
+        }
+    }
+
     void analyze(Mono mono) {
         analyze {
             mono.block()
+        }
+    }
+
+    void analyze(Mono mono, Duration timeout) {
+        analyze {
+            mono.timeout(timeout).block()
         }
     }
 
