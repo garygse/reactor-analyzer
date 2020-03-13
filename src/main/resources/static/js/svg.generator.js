@@ -1,6 +1,6 @@
 var visualizer = {
 
-    // fixed content
+    // constants
     stroke: { color: 'black', width: 2, linecap: 'round' },
     dashed: { color: 'black', width: 2, linecap: 'round', dasharray: '5,5' },
     marbleWidth: 30,
@@ -11,7 +11,10 @@ var visualizer = {
         FluxArray: 'Emits the contents of a wrapped (shared) array.',
         FluxCallable: 'For each subscriber, a Supplier is invoked and the returned value emitted.',
         FluxCombineLatest: 'Combines the latest values from multiple sources through a function.',
+        FluxConcatArray: 'Concatenates a fixed array of Publishers\' values.',
+        FluxDelaySubscription: 'Delays the subscription to the main source until another Publisher signals a value or completes.',
         FluxDistinctFuseable: 'For each Subscriber, track elements from this Flux that have been seen and filter out duplicates.',
+        FluxFirstEmitting: 'Given a set of source Publishers the values of that Publisher is forwarded to the subscriber which responds first with any signal.',
         FluxFlatMap: 'Transform the elements emitted by this Flux asynchronously into Publishers, then flatten these inner publishers into a single Flux through merging, which allow them to interleave.',
         FluxInterval: 'Emits long values starting with 0 and incrementing at specified time intervals on the global timer.',
         FluxIterable: 'Emits the contents of an Iterable source.',
@@ -20,6 +23,8 @@ var visualizer = {
         FluxTakeFuseable: 'Takes only the first N values from the source Publisher. If N is zero, the subscriber gets completed if the source completes, signals an error or signals its first value (which is not relayed though).',
         FluxZip: 'Repeatedly takes one item from all source Publishers and runs it through a function to produce the output item.',
         MonoCollectList: 'Buffers all values from the source Publisher and emits it as a single List.',
+        MonoDelay: 'Emits a single zero delayed by some time amount with a help of a ScheduledExecutorService instance or a generic function callback that wraps other form of async-delayed execution of tasks.',
+        MonoDelaySubscription: 'Delays the subscription to the main source until another Publisher signals a value or completes.',
         MonoFirst: 'Given a set of Publishers, the Publisher that responds first with any signal is used.',
         MonoFlattenIterable: 'Concatenates values from Iterable sequences generated via a mapper function.',
         MonoJust: 'Emits a single item.',

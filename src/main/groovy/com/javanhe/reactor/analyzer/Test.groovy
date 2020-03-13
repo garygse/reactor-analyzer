@@ -56,4 +56,21 @@ class Test {
                 .map { s -> 'fixed-output' }
                 .map { s -> throw new RuntimeException('Deliberate exception thrown for test purposes')}
     }
+
+    static Flux<String> delayedHelloWorld() {
+        Mono.just("Hello")
+                .concatWith(Mono.just("world")
+                        .delaySubscription(Duration.ofMillis(500))
+                )
+    }
+
+    static Flux<String> firstEmitter() {
+        def a = Mono.just('Which comes first?')
+                    .delaySubscription(Duration.ofMillis(450))
+
+        def b = Flux.just('Chicken', 'Egg')
+                .delaySubscription(Duration.ofMillis(400))
+
+        Flux.first(a, b)
+    }
 }

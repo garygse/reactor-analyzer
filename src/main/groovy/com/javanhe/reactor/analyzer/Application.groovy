@@ -11,6 +11,8 @@ class Application {
         analyzer.analyze Test.findMissingLetter()
         analyzer.analyze Test.monoWithMutipleMaps()
         analyzer.analyze Test.monoWithException()
+        analyzer.analyze Test.delayedHelloWorld()
+        analyzer.analyze Test.firstEmitter()
         analyzer.stop()
     }
 }
