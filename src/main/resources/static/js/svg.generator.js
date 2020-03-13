@@ -4,7 +4,8 @@ var visualizer = {
     stroke: { color: 'black', width: 2, linecap: 'round' },
     dashed: { color: 'black', width: 2, linecap: 'round', dasharray: '5,5' },
     marbleWidth: 30,
-    marbleType: 'circle',
+    marbleType: 0,
+    marbleTypes: ['circle', 'square'],
     // TODO: complete these descriptions (currently simply pulling from Java Docs)
     descriptions: {
         FluxArray: 'Emits the contents of a wrapped (shared) array.',
@@ -29,6 +30,7 @@ var visualizer = {
         $('#svg-image').empty();
         $('.explanation').empty();
         this.events = this.getReactorEvents();
+        this.marbleType = 0;
 
         if (this.draw) {
             this.draw.clear().size(300, this.events.length * 120).addTo('#svg-image');
@@ -52,6 +54,7 @@ var visualizer = {
             if (index > 0) {
                 self.connectToOperator();
             }
+            self.checkMarbleType(event.class);
             self.drawOperator(event.name);
             self.drawTimeline(event.type);
             self.drawMarbles(event.type);
@@ -162,9 +165,18 @@ var visualizer = {
         return type === 'function' || type === 'object' && !!obj;
     },
 
-    drawOperator: function(text) {
+    checkMarbleType: function(cls) {
+        if (cls.includes('Map')) {
+            this.marbleType += 1;
+            if (this.marbleType == this.marbleTypes.length) {
+                this.marbleType = 0;
+            }
+        }
+    },
+
+    drawOperator: function(label) {
         var rect = this.draw.rect(175, 40).fill('white').move(this.x, this.y).stroke(this.stroke);
-        var text = this.draw.text(text);
+        var text = this.draw.text(label);
         text.move(this.x + ((rect.width() - text.length())/2), this.y + 10);
     },
 
@@ -188,13 +200,13 @@ var visualizer = {
         this.y = this.y - 15;
         width = this.marbleWidth;
 
-        if (this.marbleType == 'circle') {
+        if (this.marbleTypes[this.marbleType] == 'circle') {
             this.draw.circle(width).fill('#C2185B').move(this.x + 30, this.y).stroke(this.stroke);
             this.draw.circle(width).fill('#00796B').move(this.x + 90, this.y).stroke(this.stroke);
             if (eventType === 'EMIT') {
                 this.draw.circle(width).fill('#FBC02D').move(this.x + 150, this.y).stroke(this.stroke);
             }
-        } else if (this.marbleType == 'square') {
+        } else if (this.marbleTypes[this.marbleType] == 'square') {
             this.draw.rect(width, width).fill('#C2185B').move(this.x + 30, this.y).stroke(this.stroke);
             this.draw.rect(width, width).fill('#00796B').move(this.x + 90, this.y).stroke(this.stroke);
             if (eventType === 'EMIT') {
