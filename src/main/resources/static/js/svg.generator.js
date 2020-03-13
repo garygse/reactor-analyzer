@@ -29,6 +29,7 @@ var visualizer = {
     initialize: function() {
         $('#svg-image').empty();
         $('.explanation').empty();
+        $('.explanation-container').hide();
         this.events = this.getReactorEvents();
         this.marbleType = 0;
 
