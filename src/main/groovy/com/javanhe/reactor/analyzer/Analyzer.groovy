@@ -90,6 +90,14 @@ class Analyzer {
     private void process(Queue<Event> events) {
         def chains = [] as LinkedList<Chain>
 
+        def event = { Event e ->
+            [
+                    event: e.type,
+                    timestamp: e.timestamp,
+                    result: e.result
+            ]
+        }
+
         events
             .each { e ->
                 if (logEvents) {
@@ -102,11 +110,11 @@ class Analyzer {
                 if (chains.find { chain ->
                     chain.isPartOfChain(e.publisher)
                 } == null) {
-                    chains << new Chain(e.publisher, e.result)
+                    chains << new Chain(e.publisher, event(e))
                 } else {
                     chains.each { chain ->
                         chain.addPublisherIfPartOfChain(e.publisher)
-                        chain.addResult(e.publisher, e.result)
+                        chain.addResult(e.publisher, event(e))
                     }
                 }
             }

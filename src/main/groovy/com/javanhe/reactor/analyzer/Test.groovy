@@ -52,7 +52,7 @@ class Test {
     }
 
     static Mono<String> monoWithException() {
-        Mono.first([Mono.just('test'), Mono.just('data')])
+        Mono.first([Mono.just([id: UUID.randomUUID().toString(), value: 'Test data'] as Object), Mono.just('data')])
                 .map { s -> 'fixed-output' }
                 .map { s -> throw new RuntimeException('Deliberate exception thrown for test purposes')}
     }

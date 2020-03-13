@@ -53,8 +53,8 @@ var visualizer = {
                 self.connectToOperator();
             }
             self.drawOperator(event.name);
-            self.drawTimeline();
-            self.drawMarbles();
+            self.drawTimeline(event.type);
+            self.drawMarbles(event.type);
         });
 
         this.generateExplanation();
@@ -81,12 +81,14 @@ var visualizer = {
             var keys = Object.keys(value.results);
             $.each(keys, function( index, tupleKey ) {
                 var event = {
-                    name: '',
-                    class: '',
+                    name: null,
+                    class: null,
+                    type: null,
                     values: []
                 }
                 event.name = self.convertTupleKey(tupleKey);
                 event.class = self.convertTupleKey(tupleKey, 0);
+                event.type = value.results[tupleKey][0].event;
                 event.values = value.results[tupleKey];
                 events.push(event);
             });
@@ -110,7 +112,7 @@ var visualizer = {
             section.append(`<p class="explanation-header">${event.name}</p>`);
             section.append(`<p class="explanation-description">${self.descriptions[event.class]}</p>`);
 
-            var isObject = self.isObject(event.values[0]);
+            var isObject = self.isObject(event.values[0].result);
             var values = isObject ? '<ul class="explanation-pipeline-data">' : '<p>';
 
             $.each(event.values, function( index, value ) {
@@ -119,14 +121,14 @@ var visualizer = {
                 }
 
                 if (isObject) {
-                    var json = JSON.stringify(value, null, '  ');
+                    var json = JSON.stringify(value.result, null, '  ');
                     values += `<li><div class="collapsible">${json}</div>
                                    <div class="content">
                                      <pre><code>${json}</code></pre>
                                    </div>
                                </li>`;
                 } else {
-                    values += value;
+                    values += value.result;
                 }
             });
 
@@ -166,27 +168,38 @@ var visualizer = {
         text.move(this.x + ((rect.width() - text.length())/2), this.y + 10);
     },
 
-    drawTimeline: function() {
+    drawTimeline: function(eventType) {
         this.x = this.x - 20;
         this.y = this.y + 80;
         var line = this.draw.line(0, 0, 250, 0).move(this.x, this.y).stroke(this.stroke);
         this.draw.line(0, 0, 10, -5).move(line.width() + this.x - 10, this.y).stroke(this.stroke);
         this.draw.line(-10, -5, 0, 0).move(line.width() + this.x - 10, this.y - 5).stroke(this.stroke);
-        this.draw.line(0, 10, 0, 0).move(line.width() + this.x - 40, this.y - 5).stroke(this.stroke);
+
+        if (eventType === 'EMIT') {
+            this.draw.line(0, 10, 0, 0).move(line.width() + this.x - 40, this.y - 5).stroke(this.stroke); // completion event
+        } else {
+            var red = { color: 'Red', width: 5 }
+            this.draw.line(0, 0, 30, -30).move(this.x + 150, this.y - 15).stroke(red); // red X error event
+            this.draw.line(0, 0, -30, -30).move(this.x + 150, this.y - 15).stroke(red);
+        }
     },
 
-    drawMarbles: function() {
+    drawMarbles: function(eventType) {
         this.y = this.y - 15;
         width = this.marbleWidth;
 
         if (this.marbleType == 'circle') {
             this.draw.circle(width).fill('#C2185B').move(this.x + 30, this.y).stroke(this.stroke);
             this.draw.circle(width).fill('#00796B').move(this.x + 90, this.y).stroke(this.stroke);
-            this.draw.circle(width).fill('#FBC02D').move(this.x + 150, this.y).stroke(this.stroke);
+            if (eventType === 'EMIT') {
+                this.draw.circle(width).fill('#FBC02D').move(this.x + 150, this.y).stroke(this.stroke);
+            }
         } else if (this.marbleType == 'square') {
             this.draw.rect(width, width).fill('#C2185B').move(this.x + 30, this.y).stroke(this.stroke);
             this.draw.rect(width, width).fill('#00796B').move(this.x + 90, this.y).stroke(this.stroke);
-            this.draw.rect(width, width).fill('#FBC02D').move(this.x + 150, this.y).stroke(this.stroke);
+            if (eventType === 'EMIT') {
+                this.draw.rect(width, width).fill('#FBC02D').move(this.x + 150, this.y).stroke(this.stroke);
+            }
         }
 
         this.connectToMarbles()
