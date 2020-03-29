@@ -49,3 +49,7 @@ The JSON output explains everything that happened during execution of the pipeli
 #### The Visualizer
 To help visually explain the results, open the static web page `index.htm` in a browser, and paste the JSON from the logs into the input area.
 Upon clicking *Generate*, it will draw (to the best of its ability) a marble diagram that should then appear on the page.  
+
+The image below is an example of some generated output:
+
+![Example output](example.png "Example output")
