@@ -20,6 +20,8 @@ var visualizer = {
         FluxFlatMap: 'Transform the elements emitted by this Flux asynchronously into Publishers, then flatten these inner publishers into a single Flux through merging, which allow them to interleave.',
         FluxInterval: 'Emits long values starting with 0 and incrementing at specified time intervals on the global timer.',
         FluxIterable: 'Emits the contents of an Iterable source.',
+        FluxLog: 'Observe all Reactive Streams signals and trace them using Logger support.',
+        FluxLogFuseable: 'Observe all Reactive Streams signals and trace them using Logger support.',
         FluxMapFuseable: 'Maps the values of the source publisher one-on-one via a mapper function.',
         FluxMerge: 'Merges a fixed array of Publishers.',
         FluxOnErrorResume: 'Resumes the failed main sequence with another sequence returned by a function for the particular failure exception.',
@@ -35,6 +37,8 @@ var visualizer = {
         MonoFirst: 'Given a set of Publishers, the Publisher that responds first with any signal is used.',
         MonoFlattenIterable: 'Concatenates values from Iterable sequences generated via a mapper function.',
         MonoJust: 'Emits a single item.',
+        MonoLog: 'Observe all Reactive Streams signals and trace them using Logger support.',
+        MonoLogFuseable: 'Observe all Reactive Streams signals and trace them using Logger support.',
         MonoMapFuseable: 'Maps the values of the source publisher one-on-one via a mapper function.',
         MonoOnErrorResume: 'Resumes the failed main sequence with another sequence returned by a function for the particular failure exception.',
         MonoTimeout: 'Signals a timeout (or switches to another sequence) in case a per-item generated Publisher source fires an item or completes before the next item arrives from the main source.'
