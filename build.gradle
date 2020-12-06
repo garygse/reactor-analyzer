@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.javanhe.reactor-com.javanhe.reactor.visualizer'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -23,3 +23,6 @@ dependencies {
     testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
     testImplementation 'io.projectreactor.tools:blockhound:1.0.1.RELEASE'
 }
+
+bootJar.enabled false
+jar.enabled true
